@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import VodClipsComponent from '../components/VodClipsComponent'
+import ClipsComponent from '../components/ClipsComponent'
 import { fetchClips, updateVideoWindow } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    stream: state.streams.find(s => s.id === ownProps.videoId),
+    video: state.videos.find(v => v.id === ownProps.videoId),
     clips: state.clips,
     videoWindow: state.videoWindow,
     fixedHeightPaper: ownProps.fixedHeightPaper
@@ -22,7 +22,6 @@ const mapDispatchToProps = dispatch => {
         }
 }
 
-const VodClips = connect(mapStateToProps, mapDispatchToProps)(VodClipsComponent)
+const Clips = connect(mapStateToProps, mapDispatchToProps)(ClipsComponent)
 
-export default VodClips
-
+export default Clips

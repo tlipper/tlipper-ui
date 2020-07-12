@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography';
-import Stream from './Stream'
+import Video from './Video'
 import Clip from './Clip'
 import Grid from '@material-ui/core/Grid';
 import VideoEditor from '../components/Media/VideoEditor';
@@ -9,11 +9,11 @@ import Paper from '@material-ui/core/Paper';
 import { PaginatedList } from 'react-paginated-list'
 import Title from '../ui/Title';
 
-class VodClipsComponent extends Component {
+class ClipsComponent extends Component {
   constructor(props) {
 		super(props);
 		this.state = {
-				stream: props.stream,
+				video: props.video,
 		};
   }
 
@@ -22,10 +22,10 @@ class VodClipsComponent extends Component {
   }
 
   render() {
-    return this.props.stream ? (
+    return this.props.video ? (
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <Stream fixedHeightPaper={this.props.fixedHeightPaper} {...this.props.stream} />
+          <Video fixedHeightPaper={this.props.fixedHeightPaper} {...this.props.video} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Paper className={this.props.fixedHeightPaper}>
@@ -43,7 +43,7 @@ class VodClipsComponent extends Component {
             <Grid container spacing={1}>
               <>{list.map((clip, index) => (
                 <Grid key={index} item xs={12} md={6}>
-                  <Clip vod_id={this.props.stream.id} {...clip} fixedHeightPaper={this.props.fixedHeightPaper} />
+                  <Clip vod_id={this.props.video.id} {...clip} fixedHeightPaper={this.props.fixedHeightPaper} />
                 </Grid>
               ))}</>
             </Grid>
@@ -54,8 +54,8 @@ class VodClipsComponent extends Component {
   }
 }
 
-VodClipsComponent.propTypes = {
-  stream: PropTypes.shape({
+ClipsComponent.propTypes = {
+  video: PropTypes.shape({
 			id: PropTypes.string.isRequired,
 			thumbnail_url: PropTypes.string.isRequired,
 			published_at: PropTypes.string.isRequired,
@@ -64,4 +64,4 @@ VodClipsComponent.propTypes = {
 		}),
 }
 
-export default VodClipsComponent
+export default ClipsComponent

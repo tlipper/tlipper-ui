@@ -12,15 +12,17 @@ const useStyles = makeStyles({
 
 export default function Deposits(props) {
   const classes = useStyles();
-  const { id, name, thumbnailUrl, publishedAt } = props;
+  const { link, name, thumbnailUrl, publishedAt } = props;
   return (
     <React.Fragment>
-      <Link href={"/videos/" + id}>
+      <Link href={link}>
         <img alt="Video Thumbnail" style={{width: "100%", height: "auto"}} src={thumbnailUrl.replace("%{width}", "900").replace("%{height}", "510")} />
         <Title>{name}</Title>
+    { publishedAt ? (
         <Typography color="textSecondary" className={classes.depositContext}>
           {new Date(publishedAt).toLocaleDateString()}
         </Typography>
+    ) : (<span />) }
       </Link>
     </React.Fragment>
   );

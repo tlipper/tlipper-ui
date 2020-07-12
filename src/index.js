@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
-import Dashboard from './ui/Dashboard';
+import Dashboard from './containers/Dashboard';
 import theme from './theme';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from './configureStore';

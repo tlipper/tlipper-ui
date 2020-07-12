@@ -2,9 +2,8 @@ import { connect } from 'react-redux'
 import DashboardComponent from '../components/DashboardComponent'
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state)
   return {
-    streams: state.streams,
+    videos: state.videos,
   }
 }
 
@@ -12,7 +11,7 @@ const mapDispatchToProps = dispatch => {
     return {}
 }
 
-const DashboardContainer = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent)
+const Dashboard = connect(mapStateToProps, mapDispatchToProps)(DashboardComponent)
 
-export default DashboardContainer
+export default Dashboard
 
