@@ -1,0 +1,17 @@
+.ve-timeline-marker {
+    width: 15px;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+    background: #6cd9ff;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.ve-timeline-marker-start {
+    left: 0;
+}
+
+.ve-timeline-marker-end {
+    left: calc(100% - 15px);
+}
