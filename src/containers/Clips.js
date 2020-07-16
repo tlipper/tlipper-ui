@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ClipsComponent from '../components/ClipsComponent'
-import { fetchClips, updateVideoWindow } from '../actions'
+import { fetchClips, updateVideoWindow, analyseVideo } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -18,6 +18,9 @@ const mapDispatchToProps = dispatch => {
           },
           updateVideoWindow: (timeRange) => {
             dispatch(updateVideoWindow(timeRange))
+          },
+          analyseVideo: (videoId) => {
+            dispatch(analyseVideo(videoId))
           }
         }
 }

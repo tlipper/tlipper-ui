@@ -130,7 +130,7 @@ class VideoEditor extends React.Component {
                             src={this.props.src}
                             preload={this.props.preload.toString()}
                             className="ve-video"
-                            muted={this.props.muted.toString()}>
+                            muted={this.props.muted}>
                         </video>
                     </div>
                     <Timeline

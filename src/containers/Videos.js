@@ -14,13 +14,13 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, ownProps) => {
     return {
           onStreamClick: id => {
                   dispatch(toggleVideo(id))
                 },
           loadVideos: () => {
-            dispatch(fetchVideos())
+            dispatch(fetchVideos(ownProps.channelId))
           }
         }
 }

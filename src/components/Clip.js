@@ -10,6 +10,8 @@ import Link from '@material-ui/core/Link';
 import Title from '../ui/Title';
 import Paper from '@material-ui/core/Paper';
 import ReactPlayer from 'react-player'
+import Timeline from './Media/Timeline'
+import parse from 'parse-duration'
 
 const useStyles = makeStyles({
   depositContext: {
@@ -17,16 +19,27 @@ const useStyles = makeStyles({
   },
 });
 
-const Clip = ({ fixedHeightPaper, vod_id, tracking_id, slug, created_at, embed_url }) => {
+const Clip = ({ fixedHeightPaper, video, tracking_id, slug, created_at, embed_url }) => {
   const classes = useStyles();
   const embedUrlWithParent = embed_url + "&parent=localhost"
+  const clipStartSeconds = (new Date(created_at) - new Date(video.published_at)) / 1000
+  const videoDurationSeconds = parse(video.duration) / 1000
   return (
     <Paper className={fixedHeightPaper}>
       <div>
 				<Title>{slug}</Title>
 				<Typography color="textSecondary" className={classes.depositContext}>
-					{new Date(created_at).toLocaleDateString()}
+					{new Date(created_at).toString()}<br />
+					{new Date(created_at).toLocaleDateString()}<br />
+					{videoDurationSeconds}<br />
 				</Typography>
+        <Timeline
+            progress={10}
+            startPosition={(clipStartSeconds / videoDurationSeconds) * 100}
+            endPosition={((clipStartSeconds + 50) / videoDurationSeconds) * 100}
+            isPlaying={false}
+            canPlay={false}>
+        </Timeline>
 				<Accordion TransitionProps={{ unmountOnExit: true }}>
 					<AccordionSummary
 						expandIcon={<ExpandMoreIcon />}

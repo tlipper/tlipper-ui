@@ -8,17 +8,16 @@ import VideoEditor from '../components/Media/VideoEditor';
 import Paper from '@material-ui/core/Paper';
 import { PaginatedList } from 'react-paginated-list'
 import Title from '../ui/Title';
+import LinearPopularityHeatmap from './LinearPopularityHeatmap'
 
 class ClipsComponent extends Component {
   constructor(props) {
 		super(props);
-		this.state = {
-				video: props.video,
-		};
   }
 
   componentDidMount() {
     this.props.loadClips(this.props.videoId)
+    this.props.analyseVideo(this.props.videoId)
   }
 
   render() {
@@ -36,6 +35,11 @@ class ClipsComponent extends Component {
           </Paper>
         </Grid>
         <Grid item xs={12}>
+          <Paper className={this.props.fixedHeightPaper}>
+            <LinearPopularityHeatmap timeline={this.props.video.analysis}/>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
           <Typography variant="h5" color="textSecondary">
             Clips
           </Typography>
@@ -43,7 +47,7 @@ class ClipsComponent extends Component {
             <Grid container spacing={1}>
               <>{list.map((clip, index) => (
                 <Grid key={index} item xs={12} md={6}>
-                  <Clip vod_id={this.props.video.id} {...clip} fixedHeightPaper={this.props.fixedHeightPaper} />
+                  <Clip video={this.props.video} {...clip} fixedHeightPaper={this.props.fixedHeightPaper} />
                 </Grid>
               ))}</>
             </Grid>

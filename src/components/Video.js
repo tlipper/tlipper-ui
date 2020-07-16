@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Title from '../ui/Title';
 
-const Video = ({ onClick, id, title, thumbnail_url, published_at, url, fixedHeightPaper }) => {
+const Video = ({ onClick, analysis, id, title, thumbnail_url, published_at, url, fixedHeightPaper }) => {
   return (
     <Paper className={fixedHeightPaper}>
       <div

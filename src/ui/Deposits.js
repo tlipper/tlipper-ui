@@ -20,7 +20,8 @@ export default function Deposits(props) {
         <Title>{name}</Title>
     { publishedAt ? (
         <Typography color="textSecondary" className={classes.depositContext}>
-          {new Date(publishedAt).toLocaleDateString()}
+          {new Date(publishedAt).toLocaleDateString()} <br />
+          {new Date(publishedAt).toString()} <br />
         </Typography>
     ) : (<span />) }
       </Link>

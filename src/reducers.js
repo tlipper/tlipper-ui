@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { RECEIVE_VIDEOS, RECEIVE_CLIPS, RECEIVE_CHANNELS, UPDATE_VIDEO_WINDOW } from './actions'
+import { RECEIVE_VIDEOS, RECEIVE_CLIPS, RECEIVE_CHANNELS, UPDATE_VIDEO_WINDOW, RECEIVE_VIDEO_ANALYSIS } from './actions'
 
 function clips(state = [], action) {
   switch(action.type) {
@@ -32,6 +32,8 @@ function videos(state = [], action) {
   switch(action.type) {
     case RECEIVE_VIDEOS:
       return action.videos
+    case RECEIVE_VIDEO_ANALYSIS:
+      return state.map(v => v.id == action.videoId ? {...v, analysis: action.data} : v)
     default:
       return state;
   }
