@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Video from './Video'
 import Grid from '@material-ui/core/Grid';
 import { PaginatedList } from 'react-paginated-list'
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 
 class VideosComponent extends Component {
   constructor(props) {
@@ -24,11 +26,22 @@ class VideosComponent extends Component {
     return (
       <PaginatedList list={sortedVideos} itemsPerPage={6} renderList={(list) => (
         <Grid container spacing={1}>
-          <>{list.map((video, index) => (
-            <Grid key={index} item xs={12} md={6} lg={4}>
-              <Video {...video} onClick={() => this.props.onVideoClick(video.id)} fixedHeightPaper={this.props.fixedHeightPaper} />
+          <Grid item xs={12} md={6} lg={3}>
+            <Paper className={this.props.fixedHeightPaper}>
+              <Button disabled={ this.props.isChannelBeingSynced } onClick={this.props.syncVideoAndClips} variant="contained" color="primary">
+                { this.props.isChannelBeingSynced ? "Syncing the channel..." : "Sync Video & Clips" }
+              </Button>
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1}>
+              <>{list.map((video, index) => (
+                <Grid key={index} item xs={12} md={6} lg={4}>
+                  <Video {...video} onClick={() => this.props.onVideoClick(video.id)} fixedHeightPaper={this.props.fixedHeightPaper} />
+                </Grid>
+              ))}</>
             </Grid>
-          ))}</>
+          </Grid>
         </Grid>
       )} />
     )

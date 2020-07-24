@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleVideo, fetchVideos } from '../actions'
+import { toggleVideo, fetchVideos, syncVideoAndClips } from '../actions'
 import VideosComponent from '../components/VideosComponent'
 
 const getVideos = (channel_id, videos) => {
@@ -10,7 +10,9 @@ const mapStateToProps = (state, ownProps) => {
   console.log(state)
   return {
     videos: getVideos(ownProps.channelId, state.videos),
-    fixedHeightPaper: ownProps.fixedHeightPaper
+    fixedHeightPaper: ownProps.fixedHeightPaper,
+    channelId: ownProps.channelId,
+    isChannelBeingSynced: state.videoClipSyncState[ownProps.channelId]
   }
 }
 
@@ -21,6 +23,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 },
           loadVideos: () => {
             dispatch(fetchVideos(ownProps.channelId))
+          },
+          syncVideoAndClips: () => {
+            dispatch(syncVideoAndClips(ownProps.channelId))
           }
         }
 }

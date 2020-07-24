@@ -84,6 +84,41 @@ export function updateVideoWindow(timeRange) {
   }
 }
 
+export const REQUEST_SYNC_VIDEO_AND_CLIPS = 'REQUEST_SYNC_VIDEO_AND_CLIPS'
+export function requestSyncVideoAndClips(channelId) {
+  return {
+    type: REQUEST_SYNC_VIDEO_AND_CLIPS,
+    channelId
+  }
+}
+
+export const RECEIVE_SYNC_VIDEO_AND_CLIPS = 'RECEIVE_SYNC_VIDEO_AND_CLIPS'
+export function receiveSyncVideoAndClips(channelId) {
+  return {
+    type: RECEIVE_SYNC_VIDEO_AND_CLIPS,
+    channelId
+  }
+}
+
+export function syncVideoAndClips(channelId) {
+  return function (dispatch) {
+    dispatch(requestSyncVideoAndClips(channelId))
+    return fetch("http://localhost:8080/videos/sync?channel_id=" + channelId, { mode: "cors", method: "POST"})
+      .then(
+        response => response.json()
+        // Do not use catch, because errors occured during rendering
+        // should be handled by React Error Boundaries
+        // https://reactjs.org/docs/error-boundaries.html
+      )
+      .then(json =>
+        // We can dispatch many times!
+        // Here, we update the app state with the results of the API call.
+
+        dispatch(receiveSyncVideoAndClips(channelId))
+      )
+  }
+}
+
 export function analyseVideo(videoId) {
   return function (dispatch) {
     dispatch(requestVideoAnalysis(videoId))

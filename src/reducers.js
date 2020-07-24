@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { RECEIVE_VIDEOS, RECEIVE_CLIPS, RECEIVE_CHANNELS, UPDATE_VIDEO_WINDOW, RECEIVE_VIDEO_ANALYSIS } from './actions'
+import { RECEIVE_VIDEOS, RECEIVE_CLIPS, RECEIVE_CHANNELS, UPDATE_VIDEO_WINDOW, RECEIVE_VIDEO_ANALYSIS, REQUEST_SYNC_VIDEO_AND_CLIPS, RECEIVE_SYNC_VIDEO_AND_CLIPS } from './actions'
 
 function clips(state = [], action) {
   switch(action.type) {
@@ -39,8 +39,19 @@ function videos(state = [], action) {
   }
 }
 
+function videoClipSyncState(state = {}, action) {
+    switch(action.type) {
+      case REQUEST_SYNC_VIDEO_AND_CLIPS:
+        return {...state, [action.channelId]: true }
+      case RECEIVE_SYNC_VIDEO_AND_CLIPS:
+        return {...state, [action.channelId]: false }
+      default:
+        return state;
+    };
+}
+
 const twitchVodderApp = combineReducers({
-  videos, clips, videoWindow, channels
+  videos, clips, videoWindow, channels, videoClipSyncState
 });
 
 export default twitchVodderApp;

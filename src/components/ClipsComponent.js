@@ -9,15 +9,22 @@ import Paper from '@material-ui/core/Paper';
 import { PaginatedList } from 'react-paginated-list'
 import Title from '../ui/Title';
 import LinearPopularityHeatmap from './LinearPopularityHeatmap'
+import { TwitchPlayer } from 'react-twitch-embed'
 
 class ClipsComponent extends Component {
   constructor(props) {
 		super(props);
+    this.state = {}
+    this.heatmapRef = React.createRef()
   }
 
   componentDidMount() {
     this.props.loadClips(this.props.videoId)
     this.props.analyseVideo(this.props.videoId)
+  }
+
+  setPlayer(player) {
+    this.setState((state) => ({player: player}))
   }
 
   render() {
@@ -29,14 +36,16 @@ class ClipsComponent extends Component {
         <Grid item xs={12} md={6}>
           <Paper className={this.props.fixedHeightPaper}>
             <Title>Video Editor</Title>
-            <VideoEditor src="https://twitch-vodder-mpeg.s3.eu-west-2.amazonaws.com/193e28463f313a8f4279_asmongold_39118384528_1513863767.mp4" preload={true} muted={false} onUpdate={this.props.updateVideoWindow}  />
+            <TwitchPlayer width="100%" ref={this.playerRef} video={this.props.video.id} onReady={(player) => {
+                this.heatmapRef.current.setPlayer(player)
+              }}/>
             <br />Start: { this.props.videoWindow.start }
             <br />End: { this.props.videoWindow.end }
           </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper className={this.props.fixedHeightPaper}>
-            <LinearPopularityHeatmap timeline={this.props.video.analysis}/>
+            <LinearPopularityHeatmap ref={this.heatmapRef} timeline={this.props.video.analysis}/>
           </Paper>
         </Grid>
         <Grid item xs={12}>
