@@ -25,7 +25,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "latest",
     "react-tooltip": "^4.2.7",
-    "react-twitch-embed": "^2.1.0",
+    "react-twitch-embed": "https://github.com/yigitozkavci/react-twitch-embed.git",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",

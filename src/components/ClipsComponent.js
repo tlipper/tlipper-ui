@@ -14,40 +14,50 @@ import { TwitchPlayer } from 'react-twitch-embed'
 class ClipsComponent extends Component {
   constructor(props) {
 		super(props);
-    this.state = {}
+    this.state = { heatmapReady: false }
     this.heatmapRef = React.createRef()
   }
 
   componentDidMount() {
     this.props.loadClips(this.props.videoId)
     this.props.analyseVideo(this.props.videoId)
+    console.log(window.Twitch)
   }
 
   setPlayer(player) {
-    this.setState((state) => ({player: player}))
+    this.setState((state) => ({...state, player: player}))
+  }
+
+  setHeatmapReady() {
+    this.setState((state) => ({...state, heatmapReady: true}))
+  }
+
+  twitchPlayerReady(player) {
+    this.heatmapRef.current.setPlayer(player)
   }
 
   render() {
     return this.props.video ? (
       <Grid container spacing={3}>
+        {/*
         <Grid item xs={12} md={6}>
           <Video fixedHeightPaper={this.props.fixedHeightPaper} {...this.props.video} />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Paper className={this.props.fixedHeightPaper}>
-            <Title>Video Editor</Title>
-            <TwitchPlayer width="100%" ref={this.playerRef} video={this.props.video.id} onReady={(player) => {
-                this.heatmapRef.current.setPlayer(player)
-              }}/>
-            <br />Start: { this.props.videoWindow.start }
-            <br />End: { this.props.videoWindow.end }
-          </Paper>
-        </Grid>
+        */}
+        { this.state.heatmapReady ? (
+          <Grid item xs={12} md={12}>
+            <Paper className={this.props.fixedHeightPaper}>
+              <Title>Video Editor</Title>
+              <TwitchPlayer autoplay={false} width="100%" video={this.props.video.id} onReady={(player) => this.twitchPlayerReady(player)}/>
+            </Paper>
+          </Grid>
+        ) : (<>Loading</>) }
         <Grid item xs={12}>
           <Paper className={this.props.fixedHeightPaper}>
-            <LinearPopularityHeatmap ref={this.heatmapRef} timeline={this.props.video.analysis}/>
+            <LinearPopularityHeatmap onLoad={this.setHeatmapReady.bind(this)} ref={this.heatmapRef} timeline={this.props.video.analysis}/>
           </Paper>
         </Grid>
+        {/*
         <Grid item xs={12}>
           <Typography variant="h5" color="textSecondary">
             Clips
@@ -62,6 +72,7 @@ class ClipsComponent extends Component {
             </Grid>
           )} />
         </Grid>
+        */}
       </Grid>
     ) : (<div>Not found</div>)
   }
