@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import Dashboard from './containers/Dashboard';
-import theme from './theme';
+import { theme } from './theme';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from './configureStore';
 import { PersistGate } from 'redux-persist/integration/react'
@@ -18,7 +20,9 @@ ReactDOM.render(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <Dashboard />
+          <DndProvider backend={HTML5Backend}>
+            <Dashboard />
+          </DndProvider>
         </BrowserRouter>
       </ThemeProvider>
     </PersistGate>

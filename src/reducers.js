@@ -33,7 +33,7 @@ function videos(state = [], action) {
     case RECEIVE_VIDEOS:
       return action.videos
     case RECEIVE_VIDEO_ANALYSIS:
-      return state.map(v => v.id == action.videoId ? {...v, analysis: action.data} : v)
+      return state.map(v => v.id === action.videoId ? {...v, analysis: action.data} : v)
     default:
       return state;
   }
