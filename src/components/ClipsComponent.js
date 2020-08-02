@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 // import Typography from '@material-ui/core/Typography';
 // import Video from './Video'
 // import Clip from './Clip'
-import Grid from '@material-ui/core/Grid';
-// import VideoEditor from '../components/Media/VideoEditor';
-import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid'
+import Paper from '@material-ui/core/Paper'
 // import { PaginatedList } from 'react-paginated-list'
-import Title from '../ui/Title';
-import LinearPopularityHeatmap from './LinearPopularityHeatmap'
+import Title from '../ui/Title'
+import VideoEditor from './VideoEditor'
 import { TwitchPlayer } from 'react-twitch-embed'
 
 class ClipsComponent extends Component {
@@ -52,11 +51,7 @@ class ClipsComponent extends Component {
             </Paper>
           </Grid>
         ) : (<>Loading</>) }
-        <Grid item xs={12}>
-          <Paper className={this.props.fixedHeightPaper}>
-            <LinearPopularityHeatmap fixedHeightPaper={this.props.fixedHeightPaper} classes={this.props.classes} onLoad={this.setHeatmapReady.bind(this)} ref={this.heatmapRef} timeline={this.props.video.analysis}/>
-          </Paper>
-        </Grid>
+        <VideoEditor fixedHeightPaper={this.props.fixedHeightPaper} classes={this.props.classes} onLoad={this.setHeatmapReady.bind(this)} ref={this.heatmapRef} timeline={this.props.video.analysis}/>
         {/*
         <Grid item xs={12}>
           <Typography variant="h5" color="textSecondary">

@@ -2,13 +2,16 @@ import React from 'react'
 import ReactTooltip from "react-tooltip";
 import SegmentCropList from './Editor/SegmentCropList'
 import SegmentsLine from './Editor/SegmentsLine'
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper'
+import Title from '../ui/Title';
 
 const Segment = ({percentage, baseIntensity, intensity, score, start, end}) => {
   const netIntensity = baseIntensity + intensity * (1 - baseIntensity)
   return (<div data-tip={start + ":" + end} score={score} style={{pointerEvents: "none", position: "relative", float: "left", display: "inline-block", width: percentage + "%", height: "100%", backgroundColor: "rgba(255, 0, 0, " + netIntensity + ")"}}></div>)
 }
 
-class LinearPopularityHeatmap extends React.Component {
+class VideoEditor extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -93,14 +96,24 @@ class LinearPopularityHeatmap extends React.Component {
   render() {
     return this.props.timeline ? (
       <>
-        <SegmentsLine resetZoom={this.resetZoom.bind(this)} onZoom={this.onZoom.bind(this)} scopeStart={this.state.scope.start} scopeEnd={this.state.scope.end} onSelectRange={this.onSelectRange.bind(this)}>
-          { this.generateSegments(this.props.timeline) }
-          <ReactTooltip />
-        </SegmentsLine>
-        <SegmentCropList fixedHeightPaper={this.props.fixedHeightPaper} ref={this.segmentCropList} classes={this.props.classes}/>
+        <Grid item xs={12}>
+          <Paper className={this.props.fixedHeightPaper}>
+            <Title>Popular Segments</Title>
+            <SegmentsLine resetZoom={this.resetZoom.bind(this)} onZoom={this.onZoom.bind(this)} scopeStart={this.state.scope.start} scopeEnd={this.state.scope.end} onSelectRange={this.onSelectRange.bind(this)}>
+              { this.generateSegments(this.props.timeline) }
+              <ReactTooltip />
+            </SegmentsLine>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={this.props.fixedHeightPaper}>
+            <Title>Cropped Segments</Title>
+            <SegmentCropList fixedHeightPaper={this.props.fixedHeightPaper} ref={this.segmentCropList} classes={this.props.classes}/>
+          </Paper>
+        </Grid>
       </>
     ) : (<>Analysis data doesn't exist for this video.</>)
   }
 }
 
-export default LinearPopularityHeatmap
+export default VideoEditor

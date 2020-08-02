@@ -1,6 +1,7 @@
 import React from 'react'
 import Grid from '@material-ui/core/Grid';
 import { SegmentCrop } from './SegmentCrop'
+import Title from '../../ui/Title';
 
 export default class SegmentCropList extends React.Component {
   constructor(props) {
@@ -19,9 +20,11 @@ export default class SegmentCropList extends React.Component {
 
   render() {
     return (
-      <Grid container spacing={1}>{this.state.segmentCrops.map((segmentCrop, i) => (
-        <SegmentCrop key={i} classes={this.props.fixedHeightPaper} startTimestamp={segmentCrop.startTimestamp} endTimestamp={segmentCrop.endTimestamp} />
-      ))}</Grid>
+      <>
+        {this.state.segmentCrops.map((segmentCrop, i) => (
+          <SegmentCrop key={i} classes={this.props.fixedHeightPaper} startTimestamp={segmentCrop.startTimestamp} endTimestamp={segmentCrop.endTimestamp} />
+        ))}
+      </>
     )
   }
 }
