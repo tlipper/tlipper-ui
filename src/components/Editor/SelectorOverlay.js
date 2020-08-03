@@ -4,7 +4,6 @@ import { Selection, Cursor } from './Selection'
 
 const SELECTION_STATE_NOT_SELECTING = 'SELECTION_STATE_NOT_SELECTING'
 const SELECTION_STATE_SELECTING = 'SELECTION_STATE_SELECTING'
-const SELECTION_STATE_FINISHED_SELECTING = 'SELECTION_STATE_FINISHED_SELECTING'
 
 export default class SelectorOverlay extends React.Component {
   constructor(props) {
@@ -22,8 +21,6 @@ export default class SelectorOverlay extends React.Component {
         case SELECTION_STATE_SELECTING:
           this.setState((state) => ({ ...state, cursorX: ne.offsetX, selectionEndX: ne.offsetX > state.selectionStartX ? ne.offsetX : state.selectionEndX, y: 0 }))
           break
-        case SELECTION_STATE_FINISHED_SELECTING:
-          break
         default:
           console.error("Invalid selection state: " + this.state.selectionState)
           break
@@ -33,14 +30,11 @@ export default class SelectorOverlay extends React.Component {
 
   _onClick(e) {
     const ne = e.nativeEvent
-    console.log(ne)
     switch(this.state.selectionState) {
       case SELECTION_STATE_NOT_SELECTING:
-        console.log(this.state)
         this.setState((state) => ({ ...state, selectionStartX: state.cursorX, selectionState: SELECTION_STATE_SELECTING }))
         break
       case SELECTION_STATE_SELECTING:
-        console.log(this.state)
         if(this.state.selectionEndX > this.state.selectionStartX) {
           const endPercentage = 100 * this.state.selectionEndX / this.props.segmentsBarRef.current.offsetWidth
           const startPercentage = 100 * this.state.selectionStartX / this.props.segmentsBarRef.current.offsetWidth
@@ -69,7 +63,6 @@ export default class SelectorOverlay extends React.Component {
   }
 
   changeMode() {
-    console.log("Changing mode")
     switch(this.state.mode) {
       case MODE_ZOOM:
         this.setState((state) => ({ ...state, mode: MODE_CROP}))

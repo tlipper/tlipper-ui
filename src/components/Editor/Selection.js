@@ -1,22 +1,8 @@
 import React from 'react'
 
-export class Selection extends React.Component {
-  constructor(props) {
-    super(props)
-  }
+export const Selection = ({left, width}) => (
+    <div style={{position: "absolute", pointerEvents: "none", zIndex: "-1", left: left, width: width + "px", backgroundColor: "rgba(0, 255, 0, 0.4)", display: "block", height: "100%"}}></div>)
 
-  render() {
-    return (<div style={{position: "absolute", pointerEvents: "none", zIndex: "-1", left: this.props.left, width: this.props.width + "px", backgroundColor: "rgba(0, 255, 0, 0.4)", display: "block", height: "100%"}}></div>)
-  }
-}
-
-export class Cursor extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return (<div style={{position: "absolute", pointerEvents: "none", zIndex: "-1", left: this.props.pos, width: "3px", backgroundColor: "rgba(0, 255, 0, 0.4)", display: "block", height: "100%"}}></div>)
-  }
-}
+export const Cursor = ({pos}) => (
+    <div style={{position: "absolute", pointerEvents: "none", zIndex: "-1", left: pos, width: "3px", backgroundColor: "rgba(0, 255, 0, 0.4)", display: "block", height: "100%"}}></div>)
     

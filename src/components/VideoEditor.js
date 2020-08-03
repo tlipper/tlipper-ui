@@ -1,10 +1,11 @@
 import React from 'react'
-import ReactTooltip from "react-tooltip";
+import ReactTooltip from "react-tooltip"
 import SegmentCropList from './Editor/SegmentCropList'
 import SegmentsLine from './Editor/SegmentsLine'
-import Grid from '@material-ui/core/Grid';
+import { ExportBuilder } from './Editor/ExportBuilder'
+import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
-import Title from '../ui/Title';
+import Title from '../ui/Title'
 
 const Segment = ({percentage, baseIntensity, intensity, score, start, end}) => {
   const netIntensity = baseIntensity + intensity * (1 - baseIntensity)
@@ -109,6 +110,12 @@ class VideoEditor extends React.Component {
           <Paper className={this.props.fixedHeightPaper}>
             <Title>Cropped Segments</Title>
             <SegmentCropList fixedHeightPaper={this.props.fixedHeightPaper} ref={this.segmentCropList} classes={this.props.classes}/>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper className={this.props.fixedHeightPaper}>
+            <Title>Export Builder</Title>
+            <ExportBuilder exportSegments={[]} fixedHeightPaper={this.props.fixedHeightPaper} classes={this.props.classes}/>
           </Paper>
         </Grid>
       </>

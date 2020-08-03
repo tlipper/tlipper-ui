@@ -18,13 +18,21 @@ export default class SegmentCropList extends React.Component {
     }]}))
   }
 
+  _removeSegmentCrop(i) {
+    this.setState((state) => {
+      var newSegmentCrops = [...state.segmentCrops]
+      newSegmentCrops.splice(i, 1)
+      return {...state, segmentCrops: newSegmentCrops }
+   })
+  }
+
   render() {
     return (
-      <>
+      <Grid container spacing={1}>
         {this.state.segmentCrops.map((segmentCrop, i) => (
-          <SegmentCrop key={i} classes={this.props.fixedHeightPaper} startTimestamp={segmentCrop.startTimestamp} endTimestamp={segmentCrop.endTimestamp} />
+          <SegmentCrop key={i} destroy={this._removeSegmentCrop.bind(this)} classes={this.props.fixedHeightPaper} startTimestamp={segmentCrop.startTimestamp} endTimestamp={segmentCrop.endTimestamp} />
         ))}
-      </>
+      </Grid>
     )
   }
 }
