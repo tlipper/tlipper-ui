@@ -5,13 +5,6 @@ import { DraggableItemTypes } from '../../Constants'
 import { secondsToStringTimestamp, secondsToStringDuration } from '../../Util'
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
-import { withStyles } from '@material-ui/core/styles';
-
-const styles = {
-  pointerOnHover: {
-    '&:hover': {cursor: 'pointer'}
-  }
-}
 
 const SegmentCrop = ({classes, startTimestamp, endTimestamp, destroy}) => {
 	const [{ isDragging }, drag] = useDrag({
@@ -43,4 +36,4 @@ const SegmentCrop = ({classes, startTimestamp, endTimestamp, destroy}) => {
   )
 }
 
-export default withStyles(styles)(SegmentCrop)
+export default (SegmentCrop)

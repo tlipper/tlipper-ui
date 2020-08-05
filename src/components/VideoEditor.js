@@ -59,7 +59,7 @@ class VideoEditor extends React.Component {
     const startTimestamp = this.state.scope.start + startPercentage * currentDuration / 100
     const endTimestamp = this.state.scope.start + endPercentage * currentDuration / 100
     this.state.player.seek(startTimestamp)
-    this.state.player.play()
+    // this.state.player.play()
     console.log("Pausing in " + (endTimestamp - startTimestamp) + " seconds")
     // TODO(yigitozkavci): We should reset this interval if a new range is selected as well.
     setTimeout(() => {
