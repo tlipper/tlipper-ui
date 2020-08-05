@@ -101,4 +101,14 @@ export const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  pointed: {
+    '&:hover': {
+      cursor: 'pointer'
+    }
+  },
+  grayOnHover: {
+    '&:hover': {
+      backgroundColor: 'gray'
+    }
+  },
 }));

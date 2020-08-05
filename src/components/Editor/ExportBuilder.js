@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid';
-import { SegmentCrop } from './SegmentCrop'
+import SegmentCrop from './SegmentCrop'
 import { useDrop } from 'react-dnd';
 import { DraggableItemTypes } from '../../Constants'
 
-export const ExportBuilder = ({fixedHeightPaper}) => {
+export const ExportBuilder = ({classes}) => {
   const [exportSegments, setExportSegments] = useState([])
   const [{isOver, canDrop}, drop] = useDrop({
     accept: DraggableItemTypes. SEGMENT_CROP,
@@ -22,16 +22,16 @@ export const ExportBuilder = ({fixedHeightPaper}) => {
     })
   })
 
-  // add(startTimestamp, endTimestamp) {
-  //   this.setState((state) => ({...state, segmentCrops: [...state.segmentCrops, {
-  //     startTimestamp, endTimestamp
-  //   }]}))
-  // }
+  const _removeExportSegment = (i) => {
+    var newExportSegments = [...exportSegments]
+    newExportSegments.splice(i, 1)
+    setExportSegments(newExportSegments)
+  }
 
   return (
     <Grid style={{minHeight: "150px", backgroundColor: isOver ? "red" : "white"}} ref={drop} container spacing={1}>
       {exportSegments.map((exportSegment, i) => (
-        <SegmentCrop key={i} classes={fixedHeightPaper} startTimestamp={exportSegment.startTimestamp} endTimestamp={exportSegment.endTimestamp} />
+        <SegmentCrop destroy={() => _removeExportSegment(i)} key={i} classes={classes} startTimestamp={exportSegment.startTimestamp} endTimestamp={exportSegment.endTimestamp} />
       ))}
     </Grid>
   )

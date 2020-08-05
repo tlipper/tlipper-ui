@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
     video: state.videos.find(v => v.id === ownProps.videoId),
     clips: state.clips,
     videoWindow: state.videoWindow,
-    fixedHeightPaper: ownProps.fixedHeightPaper
+    classes: ownProps.classes,
   }
 }
 

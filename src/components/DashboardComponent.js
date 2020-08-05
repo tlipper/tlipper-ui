@@ -156,7 +156,7 @@ export default function DashboardComponent() {
           </Route>
           <Route path="/channels/:channelId/videos">
             <CustomAppBar classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Videos"/>
-            <InMenu render={(props) => <Videos {...props} fixedHeightPaper={fixedHeightPaper}/>} />
+            <InMenu render={(props) => <Videos {...props} classes={classes} />} />
           </Route>
           <Route path="/channels">
             <CustomAppBar classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Channels"/>

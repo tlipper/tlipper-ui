@@ -98,7 +98,7 @@ class VideoEditor extends React.Component {
     return this.props.timeline ? (
       <>
         <Grid item xs={12}>
-          <Paper className={this.props.fixedHeightPaper}>
+          <Paper className={this.props.classes.paper}>
             <Title>Popular Segments</Title>
             <SegmentsLine resetZoom={this.resetZoom.bind(this)} onZoom={this.onZoom.bind(this)} scopeStart={this.state.scope.start} scopeEnd={this.state.scope.end} onSelectRange={this.onSelectRange.bind(this)}>
               { this.generateSegments(this.props.timeline) }
@@ -107,15 +107,15 @@ class VideoEditor extends React.Component {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={this.props.fixedHeightPaper}>
+          <Paper className={this.props.classes.paper}>
             <Title>Cropped Segments</Title>
-            <SegmentCropList fixedHeightPaper={this.props.fixedHeightPaper} ref={this.segmentCropList} classes={this.props.classes}/>
+            <SegmentCropList ref={this.segmentCropList} classes={this.props.classes}/>
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <Paper className={this.props.fixedHeightPaper}>
+          <Paper className={this.props.classes.paper}>
             <Title>Export Builder</Title>
-            <ExportBuilder exportSegments={[]} fixedHeightPaper={this.props.fixedHeightPaper} classes={this.props.classes}/>
+            <ExportBuilder exportSegments={[]} classes={this.props.classes}/>
           </Paper>
         </Grid>
       </>

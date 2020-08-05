@@ -27,7 +27,7 @@ class VideosComponent extends Component {
       <PaginatedList list={sortedVideos} itemsPerPage={6} renderList={(list) => (
         <Grid container spacing={1}>
           <Grid item xs={12} md={6} lg={3}>
-            <Paper className={this.props.fixedHeightPaper}>
+            <Paper className={this.props.classes.paper}>
               <Button disabled={ this.props.isChannelBeingSynced } onClick={this.props.syncVideoAndClips} variant="contained" color="primary">
                 { this.props.isChannelBeingSynced ? "Syncing the channel..." : "Sync Video & Clips" }
               </Button>
@@ -37,7 +37,7 @@ class VideosComponent extends Component {
             <Grid container spacing={1}>
               <>{list.map((video, index) => (
                 <Grid key={index} item xs={12} md={6} lg={4}>
-                  <Video {...video} onClick={() => this.props.onVideoClick(video.id)} fixedHeightPaper={this.props.fixedHeightPaper} />
+                  <Video {...video} onClick={() => this.props.onVideoClick(video.id)} classes={this.props.classes} />
                 </Grid>
               ))}</>
             </Grid>
@@ -50,7 +50,6 @@ class VideosComponent extends Component {
 
 VideosComponent.propTypes = {
   onVideoClick: PropTypes.func.isRequired,
-  fixedHeightPaper: PropTypes.string.isRequired,
   videos: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,

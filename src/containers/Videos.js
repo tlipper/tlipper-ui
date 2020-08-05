@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
   console.log(state)
   return {
     videos: getVideos(ownProps.channelId, state.videos),
-    fixedHeightPaper: ownProps.fixedHeightPaper,
+    classes: ownProps.classes,
     channelId: ownProps.channelId,
     isChannelBeingSynced: state.videoClipSyncState[ownProps.channelId]
   }

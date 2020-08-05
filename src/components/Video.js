@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import Deposits from '../ui/Deposits'
 import Paper from '@material-ui/core/Paper';
 
-const Video = ({ onClick, analysis, id, title, thumbnail_url, published_at, url, fixedHeightPaper }) => {
+const Video = ({ onClick, analysis, id, title, thumbnail_url, published_at, url, classes }) => {
   return (
-    <Paper className={fixedHeightPaper}>
+    <Paper className={classes.paper}>
       <div
         onClick={onClick}
       >

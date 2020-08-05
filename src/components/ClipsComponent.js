@@ -40,18 +40,18 @@ class ClipsComponent extends Component {
       <Grid container spacing={3}>
         {/*
         <Grid item xs={12} md={6}>
-          <Video fixedHeightPaper={this.props.fixedHeightPaper} {...this.props.video} />
+          <Video classes={this.props.classes} {...this.props.video} />
         </Grid>
         */}
         { this.state.heatmapReady ? (
           <Grid item xs={12} md={12}>
-            <Paper className={this.props.fixedHeightPaper}>
+            <Paper className={this.props.classes.paper}>
               <Title>Video Editor</Title>
               <TwitchPlayer autoplay={false} width="100%" video={this.props.video.id} onReady={(player) => this.twitchPlayerReady(player)}/>
             </Paper>
           </Grid>
         ) : (<>Loading</>) }
-        <VideoEditor fixedHeightPaper={this.props.fixedHeightPaper} classes={this.props.classes} onLoad={this.setHeatmapReady.bind(this)} ref={this.heatmapRef} timeline={this.props.video.analysis}/>
+        <VideoEditor classes={this.props.classes} onLoad={this.setHeatmapReady.bind(this)} ref={this.heatmapRef} timeline={this.props.video.analysis}/>
         {/*
         <Grid item xs={12}>
           <Typography variant="h5" color="textSecondary">
@@ -61,7 +61,7 @@ class ClipsComponent extends Component {
             <Grid container spacing={1}>
               <>{list.map((clip, index) => (
                 <Grid key={index} item xs={12} md={6}>
-                  <Clip video={this.props.video} {...clip} fixedHeightPaper={this.props.fixedHeightPaper} />
+                  <Clip video={this.props.video} {...clip} classes={this.props.classes} />
                 </Grid>
               ))}</>
             </Grid>
