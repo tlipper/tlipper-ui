@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import SegmentCrop from './SegmentCrop'
 import { useDrop } from 'react-dnd';
@@ -92,7 +93,7 @@ const durations = (exportSegments) => exportSegments.reduce((a, exportSegment) =
 
 const durationsUntil = (exportSegments, index) => durations(exportSegments.slice(0, index + 1))
 
-export const ExportBuilder = ({classes}) => {
+export const ExportBuilder = ({classes, videoId, takeExport}) => {
   const [exportSegments, setExportSegments] = useState([])
   const componentRef = useRef()
   const { width, height } = useContainerDimensions(componentRef)
@@ -121,6 +122,7 @@ export const ExportBuilder = ({classes}) => {
           <DropZone timestamp={index == 0 ? duration(exportSegment) : durationsUntil(exportSegments, index)} addExportSegment={(item) => addExportSegment(item, index + 1)} />
         </React.Fragment>
       ))}
+      <Button fullWidth onClick={() => takeExport(videoId, exportSegments)} variant="contained" color="primary">Mode: </Button>
     </Grid>
   )
 }

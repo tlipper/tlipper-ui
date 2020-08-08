@@ -100,6 +100,23 @@ export function receiveSyncVideoAndClips(channelId) {
   }
 }
 
+export const REQUEST_TAKE_EXPORT = 'REQUEST_TAKE_EXPORT'
+export function requestTakeExport(exportSegments) {
+  return {
+    type: REQUEST_TAKE_EXPORT,
+    exportSegments
+  }
+}
+
+export const RECEIVE_TAKE_EXPORT = 'RECEIVE_TAKE_EXPORT'
+export function receiveTakeExport(exportSegments, exportId) {
+  return {
+    type: RECEIVE_TAKE_EXPORT,
+    exportSegments,
+    exportId
+  }
+}
+
 export function syncVideoAndClips(channelId) {
   return function (dispatch) {
     dispatch(requestSyncVideoAndClips(channelId))
@@ -195,6 +212,22 @@ export function fetchVideos(channelId) {
         // Here, we update the app state with the results of the API call.
 
         dispatch(receiveVideos(json))
+      )
+  }
+}
+
+export function takeExport(videoId, exportSegments) {
+  return function(dispatch) {
+    console.log("wow")
+    console.log(exportSegments)
+    dispatch(requestTakeExport(exportSegments))
+
+    return fetch("http://localhost:8080/exports", { mode: "cors", method: "POST", body: JSON.stringify( { videoId, exportSegments } )})
+      .then(
+        response => response.json()
+      )
+      .then(json =>
+        dispatch(receiveTakeExport(exportSegments, json.exportId))
       )
   }
 }

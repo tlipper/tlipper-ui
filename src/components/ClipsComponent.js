@@ -51,7 +51,7 @@ class ClipsComponent extends Component {
             </Paper>
           </Grid>
         ) : (<>Loading</>) }
-        <VideoEditor classes={this.props.classes} onLoad={this.setHeatmapReady.bind(this)} ref={this.heatmapRef} timeline={this.props.video.analysis}/>
+        <VideoEditor videoId={this.props.video.id} takeExport={this.props.takeExport} classes={this.props.classes} onLoad={this.setHeatmapReady.bind(this)} ref={this.heatmapRef} timeline={this.props.video.analysis}/>
         {/*
         <Grid item xs={12}>
           <Typography variant="h5" color="textSecondary">

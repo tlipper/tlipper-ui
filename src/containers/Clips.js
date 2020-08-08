@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import ClipsComponent from '../components/ClipsComponent'
-import { fetchClips, updateVideoWindow, analyseVideo } from '../actions'
+import { fetchClips, updateVideoWindow, analyseVideo, takeExport } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -21,6 +21,9 @@ const mapDispatchToProps = dispatch => {
           },
           analyseVideo: (videoId) => {
             dispatch(analyseVideo(videoId))
+          },
+          takeExport: (videoId, exportSegments) => {
+            dispatch(takeExport(videoId, exportSegments))
           }
         }
 }

@@ -115,7 +115,7 @@ class VideoEditor extends React.Component {
         <Grid item xs={12}>
           <Paper className={this.props.classes.paper}>
             <Title>Export Builder</Title>
-            <ExportBuilder exportSegments={[]} classes={this.props.classes}/>
+            <ExportBuilder videoId={this.props.videoId} takeExport={this.props.takeExport} exportSegments={[]} classes={this.props.classes}/>
           </Paper>
         </Grid>
       </>
