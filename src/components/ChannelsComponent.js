@@ -34,7 +34,7 @@ class ChannelsComponent extends Component {
 ChannelsComponent.propTypes = {
   channels: PropTypes.arrayOf(
 		PropTypes.shape({
-      name: PropTypes.string.isRequired 
+      display_name: PropTypes.string.isRequired 
     })
   )
 }

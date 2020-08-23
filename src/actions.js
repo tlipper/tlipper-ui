@@ -118,6 +118,23 @@ export function receiveTakeExport(exportSegments, exportId) {
   }
 }
 
+export const CREATE_NOTIFICATION = 'CREATE_NOTIFICATION'
+
+export const RECEIVE_EXPORT_STATUSES = 'RECEIVE_EXPORT_STATUSES'
+export function receiveExportStatuses(data) {
+  return {
+    type: RECEIVE_EXPORT_STATUSES,
+    data
+  }
+}
+
+export const REQUEST_EXPORT_STATUSES = 'REQUEST_EXPORT_STATUSES'
+export function requestExportStatuses() {
+  return {
+    type: REQUEST_EXPORT_STATUSES,
+  }
+}
+
 export function syncVideoAndClips(channelId) {
   return function (dispatch) {
     dispatch(requestSyncVideoAndClips(channelId))
@@ -222,6 +239,19 @@ export function fetchVideos(channelId) {
   }
 }
 
+export function updateExportStatuses() {
+  return function(dispatch) {
+    dispatch(requestExportStatuses())
+
+    return fetch("http://localhost:8080/exports", { headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, mode: "cors", method: "GET" })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveExportStatuses(json))
+      }
+      )
+  }
+}
+
 export function takeExport(videoId, exportSegments) {
   return function(dispatch) {
     dispatch(requestTakeExport(exportSegments))
@@ -234,8 +264,6 @@ export function takeExport(videoId, exportSegments) {
           return { error: null, result: json }
         } else {
           return { error: json, result: null }
-        }
-        if(!json.error) {
         }
       }
       )

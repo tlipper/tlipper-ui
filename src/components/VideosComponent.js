@@ -37,7 +37,7 @@ class VideosComponent extends Component {
             <Grid container spacing={1}>
               <>{list.map((video, index) => (
                 <Grid key={index} item xs={12} md={6} lg={4}>
-                  <Video {...video} onClick={() => this.props.onVideoClick(video.id)} classes={this.props.classes} />
+                  <Video {...video} onClick={() => this.props.onStreamClick(video.id)} classes={this.props.classes} />
                 </Grid>
               ))}</>
             </Grid>
@@ -49,7 +49,7 @@ class VideosComponent extends Component {
 }
 
 VideosComponent.propTypes = {
-  onVideoClick: PropTypes.func.isRequired,
+  onStreamClick: PropTypes.func.isRequired,
   videos: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.string.isRequired,

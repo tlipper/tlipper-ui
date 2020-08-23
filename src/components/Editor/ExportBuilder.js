@@ -71,9 +71,6 @@ const DropZone = ({classes, timestamp, addExportSegment}) => {
         <span style={{fontSize: 10}}>{secondsToStringTimestamp(timestamp)}</span>
       </div>
     </div>
-    // { isOver && hoveredSegment ? (
-    //   <TimelineSegment classes={classes} width={"20%"} startTimestamp={hoveredSegment.startTimestamp} endTimestamp={hoveredSegment.endTimestamp} />
-    // ) : (<></>) }
   )
 }
 

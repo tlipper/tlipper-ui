@@ -65,6 +65,9 @@ export const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  linearProgress: {
+    height: '100%',
+  },
   drawerPaper: {
     position: 'relative',
     whiteSpace: 'nowrap',

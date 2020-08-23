@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
@@ -27,6 +28,8 @@ import Videos from '../containers/Videos';
 import Clips from '../containers/Clips';
 import Channels from '../containers/Channels';
 import { useStyles } from '../theme';
+import Paper from '@material-ui/core/Paper'
+import { NOTIFICATIONS_POPUP_OPEN } from '../reducers'
 
 function Copyright() {
   return (
@@ -62,10 +65,74 @@ function ListItemLink(props) {
   );
 }
 
-const CustomAppBar = ({ classes, title, open, handleDrawerOpen }) =>
-  (
-    <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-      <Toolbar className={classes.toolbar}>
+function LinearProgressWithLabel(props) {
+  return (
+    <Box display="flex" alignItems="center" style={{height: '100%'}}>
+      <Box width="100%" mr={1} style={{height: '100%'}}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box minWidth={35}>
+        <Typography variant="body2" color="textSecondary">{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+const NotificationList = ({children}) => (
+  <ul style={{padding: 0, margin: 0}}>{children}</ul>
+)
+const NotificationListElement = ({children}) =>
+  (<div style={{padding: 10, listStyle: "none", border: "2px solid black"}}>
+    {children}
+  </div>)
+
+const NotificationsPopup = ({exports, updateExportStatuses, classes}) => {
+  useEffect(() => {
+    const interval = setInterval(updateExportStatuses, 1000)
+    return function cleanup() {
+      clearInterval(interval) 
+    }
+  })
+
+  const shoppingCartIcon = <ShoppingCartIcon />
+
+  return (
+    <div style={{ position: "absolute", top: 64, right: 0, width: 300, color: "black" }}>
+      <Paper className={classes.paper}>
+        <NotificationList>
+          {exports.map((export_, index) => (
+            <NotificationListElement key={index}>
+              <Grid container spacing={3}>
+                <Grid item xs={3}>
+                  Export
+                </Grid>
+                <Grid item xs={9}>
+                  <LinearProgressWithLabel className={classes.linearProgress} variant="determinate" value={export_.e_completion} />
+                </Grid>
+                <Grid item xs={12}>
+                  <a href={export_.e_url}>URL</a>
+                </Grid>
+              </Grid>
+            </NotificationListElement>
+          ))}
+        </NotificationList>
+      </Paper>
+    </div>
+  )
+}
+
+const CustomAppBar = ({ classes, exports, updateExportStatuses, title, open, handleDrawerOpen }) => {
+  const [notificationPopupOpen, setNotificationPopupOpen] = useState(false)
+
+  const toggleNotificationPopup = () => {
+    setNotificationPopupOpen(!notificationPopupOpen)
+  }
+
+  return (
+    <AppBar className={clsx(classes.appBar, open && classes.appBarShift)}>
+      <Toolbar style={{position: "relative"}} className={classes.toolbar}>
         <IconButton
           edge="start"
           color="inherit"
@@ -80,12 +147,16 @@ const CustomAppBar = ({ classes, title, open, handleDrawerOpen }) =>
         </Typography>
         <IconButton color="inherit">
           <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
+            <NotificationsIcon onClick={toggleNotificationPopup} />
           </Badge>
         </IconButton>
+        { notificationPopupOpen ? (
+          <NotificationsPopup exports={exports} updateExportStatuses={updateExportStatuses} classes={classes} />
+        ) : <></> }
       </Toolbar>
     </AppBar>
   )
+}
 
 function Menu(props) {
   const { classes, open, handleDrawerClose } = props;
@@ -133,7 +204,7 @@ const InMenu = ({render}) => {
   )
 }
 
-export default function DashboardComponent() {
+const DashboardComponent = ({exports, updateExportStatuses, notifications }) => {
   const [open, setOpen] = React.useState(true);
   const handleDrawerClose = () => {
     setOpen(false);
@@ -151,19 +222,19 @@ export default function DashboardComponent() {
         <Menu classes={classes} open={open} handleDrawerClose={handleDrawerClose} />
         <Switch>
           <Route path="/videos/:videoId">
-            <CustomAppBar classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Video"/>
-            <InMenu render={(props) => <Clips {...props} classes={classes} fixedHeightPaper={fixedHeightPaper} />} />
+            <CustomAppBar exports={exports} updateExportStatuses={updateExportStatuses} classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Video"/>
+            <InMenu render={(props) => <Clips {...props} classes={classes} />} />
           </Route>
           <Route path="/channels/:channelId/videos">
-            <CustomAppBar classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Videos"/>
+            <CustomAppBar exports={exports} updateExportStatuses={updateExportStatuses} classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Videos"/>
             <InMenu render={(props) => <Videos {...props} classes={classes} />} />
           </Route>
           <Route path="/channels">
-            <CustomAppBar classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Channels"/>
+            <CustomAppBar exports={exports} updateExportStatuses={updateExportStatuses} classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Channels"/>
             <InMenu render={(props) => <Channels fixedHeightPaper={fixedHeightPaper}/>} />
           </Route>
           <Route path="/">
-            <CustomAppBar classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Dashboard"/>
+            <CustomAppBar exports={exports} updateExportStatuses={updateExportStatuses} classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Dashboard"/>
             <InMenu render={(props) => "Hello!"} />
           </Route>
         </Switch>
@@ -171,3 +242,5 @@ export default function DashboardComponent() {
     </Router>
   );
 }
+
+export default DashboardComponent
