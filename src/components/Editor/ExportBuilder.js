@@ -5,6 +5,7 @@ import SegmentCrop from './SegmentCrop'
 import { useDrop } from 'react-dnd';
 import { DraggableItemTypes } from '../../Constants'
 import { secondsToStringTimestamp, secondsToStringDuration } from '../../Util'
+import { useSnackbar } from 'notistack';
 
 const TIMELINE_HEIGHT = 100
 const TIMELINE_TIMESTAMPS_HEIGHT = 20
@@ -79,11 +80,6 @@ const DropZone = ({classes, timestamp, addExportSegment}) => {
 const duration = (exportSegment) => (exportSegment.endTimestamp - exportSegment.startTimestamp)
 
 const computeWidth = (timelineWidth, exportSegment, exportSegments) => {
-  console.log(timelineWidth)
-  console.log(exportSegments.length + 1)
-  console.log(duration(exportSegment))
-  console.log(exportSegments)
-  console.log(exportSegments.reduce((a, exportSegment) => a + duration(exportSegment), 0))
   const res = ((timelineWidth - (exportSegments.length + 1) * DROP_ZONE_WIDTH) * duration(exportSegment) / exportSegments.reduce((a, exportSegment) => a + duration(exportSegment), 0))
   console.log(res)
   return res
@@ -97,11 +93,26 @@ export const ExportBuilder = ({classes, videoId, takeExport}) => {
   const [exportSegments, setExportSegments] = useState([])
   const componentRef = useRef()
   const { width, height } = useContainerDimensions(componentRef)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const onExportButtonClicked = (videoId, exportSegments) => {
+    takeExport(videoId, exportSegments)
+      .then(result => {
+        if(result.error) {
+          result.error.then(err =>
+            enqueueSnackbar("Error while taking export: " + err, { variant: "error" })
+          )
+        } else {
+          enqueueSnackbar("Export request is added!", { variant: "success" })
+        }
+      })
+    .catch(err => console.log(err))
+  }
 
   const addExportSegment = (item, index) => {
     const s = item.startTimestamp
     const e = item.endTimestamp
-    const newSegment = { startTimestamp: s, endTimestamp: e }
+    const newSegment = { startTimestamp: Math.floor(s), endTimestamp: Math.floor(e) }
     var newSegments = [...exportSegments]
     newSegments.splice(index, 0, newSegment) 
     setExportSegments(newSegments)
@@ -122,7 +133,7 @@ export const ExportBuilder = ({classes, videoId, takeExport}) => {
           <DropZone timestamp={index == 0 ? duration(exportSegment) : durationsUntil(exportSegments, index)} addExportSegment={(item) => addExportSegment(item, index + 1)} />
         </React.Fragment>
       ))}
-      <Button fullWidth onClick={() => takeExport(videoId, exportSegments)} variant="contained" color="primary">Mode: </Button>
+      <Button fullWidth onClick={() => onExportButtonClicked(videoId, exportSegments)} variant="contained" color="primary">Export</Button>
     </Grid>
   )
 }

@@ -1,4 +1,5 @@
 import fetch from 'cross-fetch'
+import snakeCaseKeys from 'snakecase-keys'
 
 export const TOGGLE_VIDEO = 'TOGGLE_VIDEO'
 
@@ -141,8 +142,13 @@ export function analyseVideo(videoId) {
     dispatch(requestVideoAnalysis(videoId))
 
     return fetch("http://localhost:8080/videos/" + videoId + "/analysis", { mode: "cors"})
-      .then(
-        response => response.json()
+      .then(response => {
+        if(response.ok) { 
+          return response.json()
+        } else {
+          throw new Error(response.json())
+        }
+      }
         // Do not use catch, because errors occured during rendering
         // should be handled by React Error Boundaries
         // https://reactjs.org/docs/error-boundaries.html
@@ -218,16 +224,20 @@ export function fetchVideos(channelId) {
 
 export function takeExport(videoId, exportSegments) {
   return function(dispatch) {
-    console.log("wow")
-    console.log(exportSegments)
     dispatch(requestTakeExport(exportSegments))
 
-    return fetch("http://localhost:8080/exports", { mode: "cors", method: "POST", body: JSON.stringify( { videoId, exportSegments } )})
-      .then(
-        response => response.json()
-      )
-      .then(json =>
-        dispatch(receiveTakeExport(exportSegments, json.exportId))
+    return fetch("http://localhost:8080/exports", { headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, mode: "cors", method: "POST", body: JSON.stringify( snakeCaseKeys({ videoId, exportSegments }) )})
+      .then(response => {
+        const json = response.json()
+        if(response.ok) { 
+          dispatch(receiveTakeExport(exportSegments, json.exportId))
+          return { error: null, result: json }
+        } else {
+          return { error: json, result: null }
+        }
+        if(!json.error) {
+        }
+      }
       )
   }
 }

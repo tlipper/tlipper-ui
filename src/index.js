@@ -10,6 +10,7 @@ import { theme } from './theme';
 import { BrowserRouter } from 'react-router-dom';
 import configureStore from './configureStore';
 import { PersistGate } from 'redux-persist/integration/react'
+import { SnackbarProvider } from 'notistack';
 
 
 let { store, persistor } = configureStore()
@@ -18,12 +19,14 @@ ReactDOM.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <DndProvider backend={HTML5Backend}>
-            <Dashboard />
-          </DndProvider>
-        </BrowserRouter>
+        <SnackbarProvider maxSnack={3}>
+          <CssBaseline />
+          <BrowserRouter>
+            <DndProvider backend={HTML5Backend}>
+              <Dashboard />
+            </DndProvider>
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     </PersistGate>
   </Provider>,

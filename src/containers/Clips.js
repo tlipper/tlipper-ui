@@ -22,9 +22,8 @@ const mapDispatchToProps = dispatch => {
           analyseVideo: (videoId) => {
             dispatch(analyseVideo(videoId))
           },
-          takeExport: (videoId, exportSegments) => {
-            dispatch(takeExport(videoId, exportSegments))
-          }
+          takeExport: (videoId, exportSegments) => dispatch(takeExport(videoId, exportSegments))
+
         }
 }
 
