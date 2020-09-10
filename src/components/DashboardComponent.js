@@ -146,7 +146,7 @@ const CustomAppBar = ({ classes, exports, updateExportStatuses, title, open, han
           { title }
         </Typography>
         <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={exports.length} color="secondary">
             <NotificationsIcon onClick={toggleNotificationPopup} />
           </Badge>
         </IconButton>

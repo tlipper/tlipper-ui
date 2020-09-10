@@ -23,19 +23,18 @@
     "react-html5-video-editor": "^1.2.0",
     "react-paginated-list": "^1.0.4",
     "react-pagination-list": "^1.0.8",
-    "react-player": "^2.5.0",
+    "react-player": "^2.6.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "latest",
     "react-tooltip": "^4.2.7",
-    "react-twitch-embed": "https://github.com/yigitozkavci/react-twitch-embed.git",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "redux-throttle": "^0.1.1",
     "redux-thunk": "^2.3.0",
     "snakecase-keys": "^3.2.0",
-    "styled-components": "^5.1.1"
+    "styled-components": "^5.2.0"
   },
   "browserslist": {
     "production": [
@@ -50,6 +49,6 @@
     ]
   },
   "devDependencies": {
-    "redux-devtools": "^3.5.0"
+    "redux-devtools": "^3.7.0"
   }
 }
