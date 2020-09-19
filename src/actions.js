@@ -119,6 +119,23 @@ export function receiveTakeExport(exportSegments, exportId) {
   }
 }
 
+export const REQUEST_CREATE_CHANNEL = 'REQUEST_CREATE_CHANNEL'
+export function requestCreateChannel(name) {
+  return {
+    type: REQUEST_CREATE_CHANNEL,
+    name
+  }
+}
+
+export const RECEIVE_CREATE_CHANNEL = 'RECEIVE_CREATE_CHANNEL'
+export function receiveCreateChannel(name, channel) {
+  return {
+    type: RECEIVE_CREATE_CHANNEL,
+    name,
+    channel
+  }
+}
+
 export const CREATE_NOTIFICATION = 'CREATE_NOTIFICATION'
 
 export const RECEIVE_EXPORT_STATUSES = 'RECEIVE_EXPORT_STATUSES'
@@ -266,6 +283,19 @@ export function takeExport(videoId, exportSegments) {
         } else {
           return { error: json, result: null }
         }
+      }
+      )
+  }
+}
+
+export function createChannel(name) {
+  return function(dispatch) {
+    dispatch(requestCreateChannel(name))
+
+    return fetch(SERVER_HOST + "/channels?name=" + name, { headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, mode: "cors", method: "POST" })
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveCreateChannel(name, json))
       }
       )
   }

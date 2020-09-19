@@ -1,34 +1,49 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid';
 import Channel from './Channel'
 import { PaginatedList } from 'react-paginated-list'
 
-class ChannelsComponent extends Component {
-  constructor(props) {
-		super(props);
-		this.state = {
-				stream: props.stream,
-		};
+export const ChannelsComponent = ({channels, classes, loadChannels, createChannel}) => {
+  const [newChannelName, setNewChannelName] = useState("")
+
+  useEffect(() => {
+    loadChannels()
+  }, []);
+
+  const handleNewChannelInput = (e) => {
+    setNewChannelName(e.target.value)
   }
 
-  componentDidMount() {
-    this.props.loadChannels()
+  const handleNewChannelSubmit = (e) => {
+    e.preventDefault()
+    createChannel(newChannelName)
   }
 
-  render() {
-    return (
-      <PaginatedList list={this.props.channels} itemsPerPage={6} renderList={(list) => (
-        <Grid container spacing={1}>
-          <>{list.map((channel, index) => (
-            <Grid key={index} item xs={12} md={6}>
-              <Channel {...channel} fixedHeightPaper={this.props.fixedHeightPaper} />
-            </Grid>
-          ))}</>
-        </Grid>
-      )} />
-    )
-  }
+  return (
+    <Grid container>
+      <Grid item xs={12}>
+        <PaginatedList list={channels} itemsPerPage={6} renderList={(list) => (
+          <Grid container spacing={1}>
+            <>{list.map((channel, index) => (
+              <Grid key={index} item xs={3}>
+                <Channel {...channel} classes={classes} />
+              </Grid>
+            ))}</>
+          </Grid>
+        )} />
+      </Grid>
+      <Grid item xs={12}>
+        <form onSubmit={handleNewChannelSubmit}>
+          <label>
+            Name:
+            <input type="text" value={newChannelName} onChange={handleNewChannelInput} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      </Grid>
+    </Grid>
+  )
 }
 
 ChannelsComponent.propTypes = {
@@ -38,5 +53,3 @@ ChannelsComponent.propTypes = {
     })
   )
 }
-
-export default ChannelsComponent

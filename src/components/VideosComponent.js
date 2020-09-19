@@ -24,26 +24,26 @@ class VideosComponent extends Component {
     const sortedVideos = [...this.props.videos].sort((a, b) => new Date(b.published_at) - new Date(a.published_at)
       )
     return (
-      <PaginatedList list={sortedVideos} itemsPerPage={6} renderList={(list) => (
-        <Grid container spacing={1}>
-          <Grid item xs={12} md={6} lg={3}>
-            <Paper className={this.props.classes.paper}>
-              <Button disabled={ this.props.isChannelBeingSynced } onClick={this.props.syncVideoAndClips} variant="contained" color="primary">
-                { this.props.isChannelBeingSynced ? "Syncing the channel..." : "Sync Video & Clips" }
-              </Button>
-            </Paper>
-          </Grid>
-          <Grid item xs={12}>
+      <Grid container spacing={1}>
+        <Grid item xs={12} md={6}>
+          <Paper className={this.props.classes.paper}>
+            <Button disabled={ this.props.isChannelBeingSynced } onClick={this.props.syncVideoAndClips} variant="contained" color="primary">
+              { this.props.isChannelBeingSynced ? "Syncing the channel..." : "Sync Video & Clips" }
+            </Button>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} md={12} xl={12}>
+          <PaginatedList list={sortedVideos} itemsPerPage={8} renderList={(list) => (
             <Grid container spacing={1}>
-              <>{list.map((video, index) => (
-                <Grid key={index} item xs={12} md={6} lg={4}>
+              {list.map((video, index) => (
+                <Grid key={index} item xs={12} md={6} lg={3}>
                   <Video {...video} onClick={() => this.props.onStreamClick(video.id)} classes={this.props.classes} />
                 </Grid>
-              ))}</>
+              ))}
             </Grid>
-          </Grid>
+          )} />
         </Grid>
-      )} />
+      </Grid>
     )
   }
 }

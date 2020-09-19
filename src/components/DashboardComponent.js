@@ -231,7 +231,7 @@ const DashboardComponent = ({exports, updateExportStatuses, notifications }) => 
           </Route>
           <Route path="/channels">
             <CustomAppBar exports={exports} updateExportStatuses={updateExportStatuses} classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Channels"/>
-            <InMenu render={(props) => <Channels fixedHeightPaper={fixedHeightPaper}/>} />
+            <InMenu render={(props) => <Channels classes={classes}/>} />
           </Route>
           <Route path="/">
             <CustomAppBar exports={exports} updateExportStatuses={updateExportStatuses} classes={classes} open={open} handleDrawerOpen={handleDrawerOpen} title="Dashboard"/>
