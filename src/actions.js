@@ -2,7 +2,7 @@ import fetch from 'cross-fetch'
 import snakeCaseKeys from 'snakecase-keys'
 
 export const TOGGLE_VIDEO = 'TOGGLE_VIDEO'
-const SERVER_URL = "/api"
+const SERVER_HOST = "http://tlipper-api"
 
 export function toggleVideo(id) {
   return { type: TOGGLE_VIDEO, data: id }
@@ -139,7 +139,7 @@ export function requestExportStatuses() {
 export function syncVideoAndClips(channelId) {
   return function (dispatch) {
     dispatch(requestSyncVideoAndClips(channelId))
-    return fetch(SERVER_URL + "/videos/sync?channel_id=" + channelId, { mode: "cors", method: "POST"})
+    return fetch(SERVER_HOST + "/videos/sync?channel_id=" + channelId, { mode: "cors", method: "POST"})
       .then(
         response => response.json()
         // Do not use catch, because errors occured during rendering
@@ -159,7 +159,7 @@ export function analyseVideo(videoId) {
   return function (dispatch) {
     dispatch(requestVideoAnalysis(videoId))
 
-    return fetch(SERVER_URL + "/videos/" + videoId + "/analysis", { mode: "cors"})
+    return fetch(SERVER_HOST + "/videos/" + videoId + "/analysis", { mode: "cors"})
       .then(response => {
         if(response.ok) { 
           return response.json()
@@ -184,7 +184,7 @@ export function fetchChannels() {
   return function (dispatch) {
     dispatch(requestChannels())
 
-    return fetch(SERVER_URL + "/channels", { mode: "cors"})
+    return fetch(SERVER_HOST + "/channels", { mode: "cors"})
       .then(
         response => response.json()
         // Do not use catch, because errors occured during rendering
@@ -204,7 +204,7 @@ export function fetchClips(videoId) {
   return function (dispatch) {
     dispatch(requestClips())
 
-    return fetch(SERVER_URL + "/videos/" + videoId + "/clips", { mode: "cors"})
+    return fetch(SERVER_HOST + "/videos/" + videoId + "/clips", { mode: "cors"})
       .then(
         response => response.json()
         // Do not use catch, because errors occured during rendering
@@ -224,7 +224,7 @@ export function fetchVideos(channelId) {
   return function (dispatch) {
     dispatch(requestVideos(channelId))
 
-    return fetch(SERVER_URL + "/videos?channel_id=" + channelId, { mode: "cors"})
+    return fetch(SERVER_HOST + "/videos?channel_id=" + channelId, { mode: "cors"})
       .then(
         response => response.json()
         // Do not use catch, because errors occured during rendering
@@ -244,7 +244,7 @@ export function updateExportStatuses() {
   return function(dispatch) {
     dispatch(requestExportStatuses())
 
-    return fetch(SERVER_URL + "/exports", { headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, mode: "cors", method: "GET" })
+    return fetch(SERVER_HOST + "/exports", { headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, mode: "cors", method: "GET" })
       .then(response => response.json())
       .then(json => {
         dispatch(receiveExportStatuses(json))
@@ -257,7 +257,7 @@ export function takeExport(videoId, exportSegments) {
   return function(dispatch) {
     dispatch(requestTakeExport(exportSegments))
 
-    return fetch(SERVER_URL + "/exports", { headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, mode: "cors", method: "POST", body: JSON.stringify( snakeCaseKeys({ videoId, exportSegments }) )})
+    return fetch(SERVER_HOST + "/exports", { headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}, mode: "cors", method: "POST", body: JSON.stringify( snakeCaseKeys({ videoId, exportSegments }) )})
       .then(response => {
         const json = response.json()
         if(response.ok) { 
